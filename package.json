@@ -4,14 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "migrate": "npx sequelize-cli db:migrate",
-    "migrate:reset": "npx sequelize-cli db:migrate:undo:all && npm run migrate",
-    "test": "cross-env NODE_ENV=test jest --testTimeout=10000",
-    "pretest": "cross-env NODE_ENV=test npm run migrate:reset",
     "build": "babel src --out-dir dist",
     "dev": "nodemon --exec npm run restart",
     "restart": "rm -rf dist && npm run build && npm run start",
-    "start": "node dist/index.js"
+    "start": "node dist/index.js",
+    "test": "jest --testTimeout=10000 --runInBand --forceExit --detectOpenHandles --no-cache"
   },
   "repository": {
     "type": "git",
@@ -33,6 +30,9 @@
     "@babel/core": "^7.12.9",
     "@babel/node": "^7.12.6",
     "@babel/preset-env": "^7.12.7",
+    "@shelf/jest-mongodb": "^1.2.3",
+    "@types/jest": "^26.0.15",
+    "babel-jest": "^26.6.3",
     "cross-env": "^7.0.2",
     "eslint": "^7.14.0",
     "eslint-config-airbnb-base": "^14.2.1",
@@ -43,10 +43,9 @@
     "prettier": "^2.2.0",
     "supertest": "^6.0.1"
   },
-  "jest": {
-    "testEnvironment": "node",
-    "coveragePathIgnorePatterns": [
-      "/node_modules/"
-    ]
+  "husky": {
+    "hooks": {
+      "pre-push": "./node_modules/.bin/eslint src/**/*.js && npm test"
+    }
   }
 }

@@ -20,6 +20,8 @@ const app = express();
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use(express.json());
 
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log(`Running server on ${PORT}`);
 });
+
+export default server;
