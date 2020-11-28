@@ -1,5 +1,6 @@
 import path from 'path';
 import express from 'express';
+import cors from 'cors';
 import swaggerUi from 'swagger-ui-express';
 
 import routes from './routes';
@@ -18,6 +19,8 @@ const app = express();
   app.use('/', initCatsRouter(db));
 })();
 
+app.use(cors());
+app.options('*', cors());
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use(express.json());
 

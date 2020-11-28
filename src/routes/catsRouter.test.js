@@ -38,6 +38,17 @@ describe('Cats router testing', () => {
     expect(response.status).toBe(200);
   });
 
+  it('should be able to get a selection of 2 cats', async () => {
+    await db.collection('cats').insertOne({
+      _id: 'test2',
+      url: 'http://24.media.tumblr.com/tumblr_m82woaL5AD1rro1o5o1_1280.jpg',
+      score: 0,
+    });
+    const response = await request(app).get('/mash');
+
+    expect(response.status).toBe(200);
+  });
+
   it('should be able to get a cat by id', async () => {
     const response = await request(app).get('/cats/test');
 

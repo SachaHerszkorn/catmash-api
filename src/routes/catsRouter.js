@@ -28,6 +28,23 @@ const initCatsRouter = (db) => {
     }
   });
 
+  routes.get('/mash', async (req, res) => {
+    try {
+      const docs = await db
+        .collection('cats')
+        .aggregate([{ $sample: { size: 2 } }])
+        .toArray();
+      if (!docs) {
+        throw new Error('Not found');
+      }
+      res.status(200).json(docs);
+    } catch (err) {
+      res.status(404).json({ message: err.message });
+      // eslint-disable-next-line no-console
+      console.log(err);
+    }
+  });
+
   routes.post('/cats/:id/vote/', async ({ params: { id } }, res) => {
     try {
       const docs = await db
