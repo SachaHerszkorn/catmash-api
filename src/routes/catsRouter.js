@@ -30,9 +30,12 @@ const initCatsRouter = (db) => {
 
   routes.get('/mash', async (req, res) => {
     try {
+      let size = 2;
+      const hasMultipleSample = Math.floor(Math.random() * 10);
+      if (hasMultipleSample === 0) size += Math.floor(Math.random() * 2);
       const docs = await db
         .collection('cats')
-        .aggregate([{ $sample: { size: 2 } }])
+        .aggregate([{ $sample: { size } }])
         .toArray();
       if (!docs) {
         throw new Error('Not found');
