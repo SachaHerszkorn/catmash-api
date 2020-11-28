@@ -4,11 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "feed-database": "mongoimport --jsonArray --db catmashApi --collection cats --file cats.json",
     "build": "babel src --out-dir dist",
     "dev": "nodemon --exec npm run restart",
     "restart": "rm -rf dist && npm run build && npm run start",
     "start": "node dist/index.js",
-    "test": "jest --testTimeout=10000 --runInBand --forceExit --detectOpenHandles --no-cache"
+    "test": "jest --testTimeout=10000 --runInBand --forceExit --detectOpenHandles --no-cache && npm run feed-database",
+    "lint": "./node_modules/.bin/eslint src/**/*.js"
   },
   "repository": {
     "type": "git",
@@ -33,7 +35,6 @@
     "@shelf/jest-mongodb": "^1.2.3",
     "@types/jest": "^26.0.15",
     "babel-jest": "^26.6.3",
-    "cross-env": "^7.0.2",
     "eslint": "^7.14.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-config-prettier": "^6.15.0",
@@ -46,7 +47,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-push": "./node_modules/.bin/eslint src/**/*.js && npm test"
+      "pre-push": "npm run lint && npm test"
     }
   }
 }

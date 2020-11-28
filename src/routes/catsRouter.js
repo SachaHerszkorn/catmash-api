@@ -3,16 +3,15 @@ import { Router } from 'express';
 const routes = Router();
 
 const initCatsRouter = (db) => {
-  routes.get('/cats', (req, res) => {
-    db.collection('cats')
-      .find({})
-      .toArray((err, docs) => {
-        if (err) {
-          console.log(err);
-          throw err;
-        }
-        res.status(200).json(docs);
-      });
+  routes.get('/cats', async (req, res) => {
+    try {
+      const docs = await db.collection('cats').find({}).toArray();
+      res.status(200).json(docs);
+    } catch (err) {
+      res.status(404).json({ message: err.message });
+      // eslint-disable-next-line no-console
+      console.log(err);
+    }
   });
 
   routes.get('/cats/:id', async ({ params: { id } }, res) => {
@@ -24,6 +23,7 @@ const initCatsRouter = (db) => {
       res.status(200).json(docs);
     } catch (err) {
       res.status(404).json({ message: err.message });
+      // eslint-disable-next-line no-console
       console.log(err);
     }
   });
@@ -37,6 +37,7 @@ const initCatsRouter = (db) => {
       res.status(200).json(docs.value);
     } catch (err) {
       res.status(404).json({ message: err.message });
+      // eslint-disable-next-line no-console
       console.log(err);
     }
   });

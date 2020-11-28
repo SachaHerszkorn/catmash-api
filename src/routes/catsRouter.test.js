@@ -16,6 +16,7 @@ describe('Cats router testing', () => {
       useUnifiedTopology: true,
     });
     db = await mongoClient.db(DBNAME);
+    await db.collection('cats').deleteMany({});
     await db.collection('cats').insertOne({
       _id: 'test',
       url: 'http://24.media.tumblr.com/tumblr_m82woaL5AD1rro1o5o1_1280.jpg',
