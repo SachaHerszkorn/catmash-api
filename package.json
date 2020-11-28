@@ -47,7 +47,10 @@
   },
   "husky": {
     "hooks": {
-      "pre-push": "npm run lint && npm test"
+      "pre-push": "npm run lint && npm test && npm run build"
     }
+  },
+  "engines": {
+    "node": "14.x"
   }
 }

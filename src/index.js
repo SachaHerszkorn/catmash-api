@@ -1,3 +1,4 @@
+import path from 'path';
 import express from 'express';
 import swaggerUi from 'swagger-ui-express';
 
@@ -19,6 +20,11 @@ const app = express();
 
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use(express.json());
+
+if (process.env.NODE_ENV === 'production') {
+  const distDir = path.join(__dirname, '/dist/');
+  app.use(express.static(distDir));
+}
 
 const server = app.listen(PORT, () => {
   console.log(`Running server on ${PORT}`);
