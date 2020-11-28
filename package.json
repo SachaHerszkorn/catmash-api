@@ -10,7 +10,8 @@
     "restart": "rm -rf dist && npm run build && npm run start",
     "start": "node dist/index.js",
     "test": "jest --testTimeout=10000 --runInBand --forceExit --detectOpenHandles --no-cache && npm run feed-database",
-    "lint": "./node_modules/.bin/eslint src/**/*.js"
+    "lint": "./node_modules/.bin/eslint src/**/*.js",
+    "postinstall": "npm run build"
   },
   "repository": {
     "type": "git",
@@ -47,7 +48,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-push": "npm run lint && npm test && npm run build"
+      "pre-push": "npm run lint && npm test"
     }
   },
   "engines": {
