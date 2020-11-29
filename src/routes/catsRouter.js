@@ -31,7 +31,7 @@ const initCatsRouter = (db) => {
   routes.get('/mash', async (req, res) => {
     try {
       let size = 2;
-      const hasMultipleSample = Math.floor(Math.random() * 10);
+      const hasMultipleSample = Math.floor(Math.random() * 5);
       if (hasMultipleSample === 0) size += Math.floor(Math.random() * 2);
       const docs = await db
         .collection('cats')
