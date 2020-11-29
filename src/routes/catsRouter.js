@@ -5,7 +5,7 @@ const routes = Router();
 const initCatsRouter = (db) => {
   routes.get('/cats', async (req, res) => {
     try {
-      const docs = await db.collection('cats').find({}).toArray();
+      const docs = await db.collection('cats').find({}).sort({ score: -1 }).toArray();
       res.status(200).json(docs);
     } catch (err) {
       res.status(404).json({ message: err.message });
